@@ -13,13 +13,19 @@
             padding-bottom: 50px;
         }
         
-        /* Efecto para que la tarjeta seleccionada resalte */
+        /* Estilo de las nuevas tarjetas */
         .card-plan {
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-radius: 20px;
             overflow: hidden;
             border: 2px solid transparent;
+            background: white;
+        }
+        
+        .card-plan img {
+            height: 150px;
+            object-fit: cover; /* Para que la imagen no se deforme */
         }
         
         .card-plan:hover {
@@ -45,7 +51,7 @@
         }
 
         #form-detalles {
-            display: none; /* Se muestra al elegir una tarjeta */
+            display: none;
             animation: fadeIn 0.6s ease;
         }
 
@@ -58,41 +64,41 @@
 <body>
 
 <div class="container py-5">
-    <h2 class="text-center mb-4 fw-bold">Qué te gustaría hacer, Cris? ❤️</h2>
+    <h2 class="text-center mb-4 fw-bold">¿Qué te gustaría hacer, Crisss? ❤️</h2>
     
-    <div class="row g-4">
-        <div class="col-6 col-md-3">
+    <div class="row row-cols-2 row-cols-md-4 g-4 text-center">
+        <div class="col">
             <div class="card h-100 card-plan shadow-sm" onclick="seleccionar('Cena', this)">
-                <div class="card-body text-center">
-                    <h1 class="display-4">🍝</h1>
+                <img src="https://github.com/AlexisJ31/Proyecto14/blob/main/titulo.png?raw=true" class="card-img-top" alt="Cena">
+                <div class="card-body">
                     <h5 class="card-title fw-bold">Cena?</h5>
                     <p class="card-text text-muted small">Una comidita buena (no cara)</p>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-md-3">
+        <div class="col">
             <div class="card h-100 card-plan shadow-sm" onclick="seleccionar('Cine', this)">
-                <div class="card-body text-center">
-                    <h1 class="display-4">🍿</h1>
+                <img src="https://github.com/AlexisJ31/Proyecto14/blob/main/elfo.png?raw=true" class="card-img-top" alt="Cine">
+                <div class="card-body">
                     <h5 class="card-title fw-bold">Cine</h5>
                     <p class="card-text text-muted small">creo que no hay nada ahora jajajaja</p>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-md-3">
+        <div class="col">
             <div class="card h-100 card-plan shadow-sm" onclick="seleccionar('Parque', this)">
-                <div class="card-body text-center">
-                    <h1 class="display-4">🍦</h1>
+                <img src="https://github.com/AlexisJ31/Proyecto14/blob/main/corazonfondo.png?raw=true" class="card-img-top" alt="Parque">
+                <div class="card-body">
                     <h5 class="card-title fw-bold">Parque?</h5>
                     <p class="card-text text-muted small">Caminar y conversar</p>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-md-3">
+        <div class="col">
             <div class="card h-100 card-plan shadow-sm" onclick="seleccionar('Sorpresa', this)">
-                <div class="card-body text-center">
-                    <h1 class="display-4">✨</h1>
-                    <h5 class="card-title fw-bold">O quiere hacer tu el plan? </h5>
+                <img src="https://github.com/AlexisJ31/Proyecto14/blob/main/titulo.png?raw=true" class="card-img-top" alt="Sorpresa">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">O quieres hacer tú el plan?</h5>
                     <p class="card-text text-muted small">¡Déjamelo a mí!</p>
                 </div>
             </div>
@@ -100,15 +106,15 @@
     </div>
 
     <div id="form-detalles" class="mt-5 p-4 bg-white rounded-4 shadow-sm border mx-auto" style="max-width: 500px;">
-        <h4 class="text-center mb-4">okey okey, solo unas cositas mas... </h4>
+        <h4 class="text-center mb-4">Okey okey, solo unas cositas más...</h4>
         
         <div class="mb-3">
             <label class="form-label fw-semibold">¿Dónde prefieres?</label>
             <select id="lugar" class="form-select">
-                <option value="Casco Viejo">Cinta costera/casco viejo</option>
-                <option value="Causeway">Amador</option>
+                <option value="Cinta costera/casco viejo">Cinta costera/casco viejo</option>
+                <option value="Amador">Amador</option>
                 <option value="Multiplaza">Multiplaza</option>
-                <option value="Multiplaza">ciudad del saber</option>
+                <option value="Ciudad del saber">Ciudad del saber</option>
                 <option value="Tú eliges">¡Sorpréndeme!</option>
             </select>
         </div>
@@ -131,11 +137,9 @@
 <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
 <script>
-    // PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE
     const firebaseConfig = {
         databaseURL: "https://sanvalentin-d67c2-default-rtdb.firebaseio.com/",
         projectId: "sanvalentin-d67c2",
-        // No olvides incluir tu apiKey y appId aquí
     };
 
     firebase.initializeApp(firebaseConfig);
@@ -145,11 +149,8 @@
 
     function seleccionar(plan, elemento) {
         planElegido = plan;
-        // Quitar clase de selección de todas las tarjetas
         document.querySelectorAll('.card-plan').forEach(c => c.classList.remove('selected-card'));
-        // Agregar clase a la seleccionada
         elemento.classList.add('selected-card');
-        // Mostrar formulario
         document.getElementById('form-detalles').style.display = 'block';
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
@@ -164,19 +165,14 @@
         };
 
         try {
-            // Guardar en Firebase
             await database.ref('citas/').push(datos);
-            
-            // Enviar por WhatsApp
-            const miTel = "50765319271"; // Tu número aquí
+            const miTel = "50765319271"; 
             const texto = `¡Hola Alexis! Ya elegí: ${datos.plan}. Lugar: ${datos.lugar} a las ${datos.hora}. ❤️`;
             window.open(`https://api.whatsapp.com/send?phone=${miTel}&text=${encodeURIComponent(texto)}`);
-            
         } catch (e) {
             alert("Error al guardar, pero la cita sigue en pie!");
         }
     }
 </script>
-
 </body>
 </html>
